@@ -1,0 +1,91 @@
+.bg-container {
+  background-image: linear-gradient(
+    to bottom right,
+    #9796f0 0.5%,
+    #fbc7d4 150%
+  );
+  min-height: 100vh;
+}
+
+.navbar-container {
+  background-color: #fff3;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 4%;
+  padding: 0 10px;
+}
+
+.navbar-card {
+  display: flex;
+  justify-content: space-around;
+  max-width: 600px;
+  min-width: 100%;
+}
+
+.navbar-text {
+  color: white;
+  font-size: 20px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.puzzle-bg-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-height: 100%;
+}
+
+.puzzle-card {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  /* width: 480px;
+      height: 450px; */
+  /* border: 2px solid gray; */
+  padding: 10px;
+  width: 500px;
+  height: 450px;
+}
+
+.number-tiles {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 24px;
+  width: 23%;
+  height: 23%;
+  border: 3px solid #ffffff30;
+  color: purple;
+  background-color: #fff3;
+  font-size: 36px;
+}
+
+.number-tiles:hover {
+  background-color: #fbc7d4;
+  transform: scale(1.07);
+  transition: all ease-in-out 0.2s;
+  color: white;
+  border: none;
+}
+
+.number-tiles-zero {
+  background-color: #9796f0;
+  color: rgb(204, 62, 204);
+}
+
+.number-tiles-zero:hover {
+  background-color: rebeccapurple;
+  color: white;
+}
+
+.danger:hover {
+  background-image: linear-gradient(to right, #d7816a, #bd4f6c);
+}
+
+.success:hover {
+  background-image: linear-gradient(to right, #0bab64, #6ec8ac);
+}

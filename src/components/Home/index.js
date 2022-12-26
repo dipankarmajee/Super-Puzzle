@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import emailjs from "emailjs-com";
+import { InfinitySpin } from "react-loader-spinner";
 // import { Redirect } from "react-router-dom";
 
 // import Cookies from "js-cookie";
@@ -14,15 +15,7 @@ const Login = (props) => {
   const [password, setPassword] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
   const [activeTab, setActiveTab] = useState("signup");
-
-  const onSubmitSuccess = (jwtToken) => {
-    const { history } = this.props;
-    // Cookies.set("jwt_token", jwtToken, {
-    //   expires: 30,
-    //   path: "/",
-    // });
-    // history.replace("/");
-  };
+  const [loaderStatus, setLoaderStatus] = useState(false);
 
   const onChangeName = (event) => {
     setName(event.target.value);
@@ -36,11 +29,13 @@ const Login = (props) => {
     setPassword(event.target.value);
   };
 
-  const OnSubmitLogin = (event) => {
+  const onSubmitLogin = (event) => {
     event.preventDefault();
+    setLoaderStatus((prev) => !prev);
     setErrorMsg("");
     console.log(name, username, password);
     if (activeTab === "signup") {
+      localStorage.setItem("name", name);
       const templateParams = {
         name: name,
         email: username,
@@ -56,11 +51,13 @@ const Login = (props) => {
         .then(
           (result) => {
             console.log(result.text);
-            setErrorMsg("Please check you email for the credentails.");
+            setErrorMsg("Please check your email for the credentails.");
+            setLoaderStatus((prev) => !prev);
           },
           (error) => {
             console.log(error.text);
             setErrorMsg(error.text);
+            setLoaderStatus((prev) => !prev);
           }
         );
     } else if (activeTab === "login") {
@@ -75,11 +72,19 @@ const Login = (props) => {
       ) {
         console.log(props);
         // props.history.replace("/super-puzzle");
-        navigate("/super-puzzle");
+        navigate("/super-puzzle", { replace: true });
       } else {
         setErrorMsg("Please check your username and password");
       }
     }
+  };
+
+  const onClickActiveTab = (value) => {
+    setActiveTab(value);
+    setName("");
+    setPassword("");
+    setUsername("");
+    setErrorMsg("");
   };
 
   useEffect(() => {
@@ -98,7 +103,7 @@ const Login = (props) => {
           className={`${
             activeTab === "signup" ? "active-tab" : "non-active-tab"
           }`}
-          onClick={() => setActiveTab("signup")}
+          onClick={() => onClickActiveTab("signup")}
         >
           Sign Up
         </button>
@@ -107,12 +112,12 @@ const Login = (props) => {
           className={`${
             activeTab === "login" ? "active-tab" : "non-active-tab"
           }`}
-          onClick={() => setActiveTab("login")}
+          onClick={() => onClickActiveTab("login")}
         >
           Login
         </button>
       </div>
-      <form className="login-card" onSubmit={OnSubmitLogin}>
+      <form className="login-card" onSubmit={onSubmitLogin}>
         {activeTab === "signup" && (
           <label>
             NAME
@@ -149,11 +154,14 @@ const Login = (props) => {
           </label>
         )}
 
-        {activeTab === "signup" && (
-          <button className="login-button" type="submit">
-            Sign Up
-          </button>
-        )}
+        {activeTab === "signup" &&
+          (loaderStatus ? (
+            <InfinitySpin width="200" color="#fff" />
+          ) : (
+            <button className="login-button" type="submit">
+              Sign Up{" "}
+            </button>
+          ))}
 
         {activeTab === "login" && (
           <button className="login-button" type="submit">

@@ -118,7 +118,11 @@ const SupperPuzzle = () => {
           </p>
         </div>
       </nav>
-
+      <div className="name-container">
+        <p className="name-text">
+          Hello {localStorage.getItem("name")}! Let's play the Super Puzzle
+        </p>
+      </div>
       <div className="puzzle-bg-container">
         <div className="puzzle-card">
           {stateNumList.map((eachNum) => {
